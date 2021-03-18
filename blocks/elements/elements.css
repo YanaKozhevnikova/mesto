@@ -2,13 +2,17 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 20px 17px;
-  margin-top: 50px;
+  margin: 50px 0 0;
+  list-style: none;
+  padding: 0;
 }
 
 @media screen and (max-width: 950px) {
   .elements {
     grid-template-columns: 1fr 1fr;
-    margin: 36px 19px 0;
+    margin: 36px;
+    margin-right: 19px;
+    margin-left: 19px;
   }
 }
 
