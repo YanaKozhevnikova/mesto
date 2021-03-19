@@ -8,6 +8,12 @@
   height: 50px;
   cursor: pointer;
   transition: opacity .5s linear;
+  font-family: Inter, Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
 }
 
 .form__save-button:hover {
@@ -17,5 +23,7 @@
 @media screen and (max-width: 600px) {
   .form__save-button {
     margin-top: 45px;
+    font-size: 14px;
+    line-height: 17px;
   }
 }
