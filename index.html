@@ -24,54 +24,22 @@
         <button type="button" class="profile__button profile__button_type_add" aria-label="Добавить"></button>
       </section>
       <ul class="elements">
-        <li class="element">
-          <img src="./images/zelenogradsk.jpg" alt="Зеленоградск" class="element__image">
-          <div class="element__content">
-            <h2 class="element__heading">Зеленоградск</h2>
-            <button type="button" class="element__like-button"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img src="./images/karelia.jpg" alt="Карелия" class="element__image">
-          <div class="element__content">
-            <h2 class="element__heading">Карелия</h2>
-            <button type="button" class="element__like-button"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img src="./images/kamchatka.jpg" alt="Камчатка" class="element__image">
-          <div class="element__content">
-            <h2 class="element__heading">Камчатка</h2>
-            <button type="button" class="element__like-button"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img src="./images/karachayevsk.jpg" alt="Карачаевск" class="element__image">
-          <div class="element__content">
-            <h2 class="element__heading">Карачаевск</h2>
-            <button type="button" class="element__like-button"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img src="./images/elbrus.jpg" alt="Гора Эльбрус" class="element__image">
-          <div class="element__content">
-            <h2 class="element__heading">Гора Эльбрус</h2>
-            <button type="button" class="element__like-button"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img src="./images/dombay.jpg" alt="Домбай" class="element__image">
-          <div class="element__content">
-            <h2 class="element__heading">Домбай</h2>
-            <button type="button" class="element__like-button"></button>
-          </div>
-        </li>
+        <template id="card">
+          <li class="element">
+            <img class="element__image">
+            <button type="button" class="element__delete-button" aria-label="Удалить"></button>
+            <div class="element__content">
+              <h2 class="element__heading"></h2>
+              <button type="button" class="element__like-button" aria-label="Нравится"></button>
+            </div>
+          </li>
+        </template>
       </ul>
     </main>
     <footer class="footer">
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
-    <div class="popup">
+    <div class="popup popup_type_profile">
       <div class="popup__container">
         <button type="button" class="popup__close-button" aria-label="Закрыть"></button>
         <h2 class="popup__heading">Редактировать профиль</h2>
@@ -80,6 +48,25 @@
           <input type="text" required placeholder="О себе" name="about" class="form__input form__input_type_about">
           <button type="submit" class="form__save-button">Сохранить</button>
         </form>
+      </div>
+    </div>
+    <div class="popup popup_type_place">
+      <div class="popup__container">
+        <button type="button" class="popup__close-button" aria-label="Закрыть"></button>
+        <h2 class="popup__heading">Новое место</h2>
+        <form name="place" class="form">
+          <input type="text" required placeholder="Название" name="placename" class="form__input form__input_type_place-name">
+          <input type="url" required placeholder="Ссылка на картинку" name="link" class="form__input form__input_type_place-link">
+          <button type="submit" class="form__save-button">Сохранить</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="popup popup_type_image">
+      <div class="popup__image-container">
+        <button type="button" class="popup__close-button" aria-label="Закрыть"></button>
+        <img class="popup__image" src="" alt="">
+        <h2 class="popup__image-heading"></h2>
       </div>
     </div>
   </div>

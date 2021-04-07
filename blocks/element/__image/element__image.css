@@ -1,4 +1,13 @@
 .element__image {
   width: 100%;
+  height: calc(100% - 79px);
+  max-height: 282px;
   object-fit: cover;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 950px) {
+  .element__image {
+    max-height: 562px;
+  }
 }
