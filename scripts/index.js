@@ -1,31 +1,6 @@
-const initialCards = [
-  {
-    name: 'Домбай',
-    link: './images/dombay.jpg'
-  },
-  {
-    name: 'Гора Эльбрус',
-    link: './images/elbrus.jpg'
-  },
-  {
-    name: 'Карачаевск',
-    link: './images/karachayevsk.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: './images/kamchatka.jpg'
-  },
-  {
-    name: 'Карелия',
-    link: './images/karelia.jpg'
-  },
-  {
-    name: 'Зеленоградск',
-    link: './images/zelenogradsk.jpg'
-  }
-];
-
+//card
 const cardTemplate = document.querySelector('#card').content;
+const card = cardTemplate.querySelector('.element');
 
 //profile
 const profilePopup = document.querySelector('.popup_type_profile');
@@ -55,32 +30,36 @@ const imageCloseButton = imagePopup.querySelector('.popup__close-button');
 
 //создание карточки
 function createCard(name, link) {
-  const card = cardTemplate.querySelector('.element').cloneNode(true);
-  const cardImage = card.querySelector('.element__image');
-  const cardHeading =  card.querySelector('.element__heading');
-  const cardLikeBtn = card.querySelector('.element__like-button');
-  const cardDeleteBtn = card.querySelector('.element__delete-button');
+  const newCard = card.cloneNode(true);
+  const cardImage = newCard.querySelector('.element__image');
+  const cardHeading =  newCard.querySelector('.element__heading');
+  const cardLikeButton = newCard.querySelector('.element__like-button');
+  const cardDeleteButton = newCard.querySelector('.element__delete-button');
+
   cardImage.src = link;
   cardImage.alt = name;
   cardHeading.textContent = name;
 
-  elements.prepend(card);
-
-  likeCard(cardLikeBtn);
-  deleteCard(cardDeleteBtn);
+  likeCard(cardLikeButton);
+  deleteCard(cardDeleteButton);
   openImagePopup(cardImage);
+
+  return newCard;
 }
 
+function renderCard(name, link, wrap) {
+  wrap.prepend(createCard(name, link));
+}
 
-function likeCard(likebtn) {
-  likebtn.addEventListener('click', () => {
-    likebtn.classList.toggle('element__like-button_active');
+function likeCard(likeButton) {
+  likeButton.addEventListener('click', () => {
+    likeButton.classList.toggle('element__like-button_active');
   });
 }
 
-function deleteCard(deletebtn) {
-  deletebtn.addEventListener('click', () => {
-    deletebtn.closest('.element').remove();
+function deleteCard(deleteButton) {
+  deleteButton.addEventListener('click', () => {
+    deleteButton.closest('.element').remove();
   });
 }
 
@@ -108,14 +87,16 @@ function handleProfileSubmit (evt) {
 
 //place popup
 function openPlacePopup() {
-  placeNameInput.value = null;
-  placeLinkInput.value = null;
+  // Я не стала переносить очищение полей, тк если их добавить после создания карточки,
+  // то при закрытии попапа с помощю конпки "закрыть" без отправки формы поля не очистятся
+  placeNameInput.value = '';
+  placeLinkInput.value = '';
   openPopup(placePopup);
 }
 
 function handlePlaceSubmit (evt) {
   evt.preventDefault();
-  createCard(placeNameInput.value, placeLinkInput.value);
+  renderCard(placeNameInput.value, placeLinkInput.value, elements);
   closePopup(placePopup);
 }
 
@@ -129,19 +110,21 @@ function openImagePopup(image) {
   });
 }
 
-initialCards.forEach(item => {createCard(item.name, item.link)});
+// Я пока не ссовсем знаю, как правильно работать с объектами,
+// но в следующем спринте после изучения этой темы обязательно поправлю!
+initialCards.forEach(item => {renderCard(item.name, item.link, elements)});
 
 //profile popup
 editButton.addEventListener('click', openProfilePopup);
-profileCloseButton.addEventListener('click', () => {closePopup(profilePopup)});
+profileCloseButton.addEventListener('click', () => closePopup(profilePopup));
 profileForm.addEventListener('submit', handleProfileSubmit);
 
 //place popup
 addButton.addEventListener('click', openPlacePopup);
-placeCloseButton.addEventListener('click', () => {closePopup(placePopup)});
+placeCloseButton.addEventListener('click', () => closePopup(placePopup));
 placeForm.addEventListener('submit', handlePlaceSubmit);
 
 //image popup
-imageCloseButton.addEventListener('click', () => {closePopup(imagePopup)});
+imageCloseButton.addEventListener('click', () => closePopup(imagePopup));
 
-
+//Спасибо за комментарии! Я рада, что работа понравилась :)
