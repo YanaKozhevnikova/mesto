@@ -3,7 +3,7 @@
   border: none;
   border-radius: 2px;
   color: #fff;
-  margin: 48px 0 0;
+  margin: 18px 0 0;
   padding: 0;
   height: 50px;
   cursor: pointer;
@@ -22,7 +22,7 @@
 
 @media screen and (max-width: 600px) {
   .form__save-button {
-    margin-top: 45px;
+    margin-top: 15px;
     font-size: 14px;
     line-height: 17px;
   }

@@ -12,7 +12,3 @@
   height: 27px;
   box-sizing: border-box;
 }
-
-.form__input:last-of-type {
-  margin-bottom: 0;
-}

@@ -29,16 +29,16 @@ const imageCloseButton = imagePopup.querySelector('.popup__close-button');
 
 
 //создание карточки
-function createCard(name, link) {
+function createCard(item) {
   const newCard = card.cloneNode(true);
   const cardImage = newCard.querySelector('.element__image');
   const cardHeading =  newCard.querySelector('.element__heading');
   const cardLikeButton = newCard.querySelector('.element__like-button');
   const cardDeleteButton = newCard.querySelector('.element__delete-button');
 
-  cardImage.src = link;
-  cardImage.alt = name;
-  cardHeading.textContent = name;
+  cardImage.src = item.link;
+  cardImage.alt = item.name;
+  cardHeading.textContent = item.name;
 
   likeCard(cardLikeButton);
   deleteCard(cardDeleteButton);
@@ -47,8 +47,8 @@ function createCard(name, link) {
   return newCard;
 }
 
-function renderCard(name, link, wrap) {
-  wrap.prepend(createCard(name, link));
+function renderCard(item, wrap) {
+  wrap.prepend(createCard(item));
 }
 
 function likeCard(likeButton) {
@@ -65,14 +65,41 @@ function deleteCard(deleteButton) {
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  closePopupOverlay(popup);
+  closePopupEsc(popup);
 }
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
 }
+//Закрытие попапа по нажатию на оверлей или esc
+function closePopupEsc(popup) {
+  document.addEventListener('keydown', (evt) => {
+    if(evt.key === 'Escape') {
+      closePopup(popup);
+    };
+  });
+}
+
+function closePopupOverlay(popup) {
+ document.addEventListener('click', (evt) => {
+   if (evt.target.classList.contains('popup')) {
+     closePopup(popup);
+   };
+ });
+}
+
+ //Очищение полей с ошибками
+function clearValidationError(popupForm) {
+  const inputList = Array.from(popupForm.querySelectorAll('.form__input'));
+  inputList.forEach(inputElement => {
+    hideInputError(popupForm, inputElement, validationObject);
+  });
+}
 
 //profile popup
 function openProfilePopup() {
+  clearValidationError(profileForm);
   nameInput.value = username.textContent;
   aboutInput.value = about.textContent;
   openPopup(profilePopup);
@@ -87,22 +114,20 @@ function handleProfileSubmit (evt) {
 
 //place popup
 function openPlacePopup() {
-  // Я не стала переносить очищение полей, тк если их добавить после создания карточки,
-  // то при закрытии попапа с помощю конпки "закрыть" без отправки формы поля не очистятся
-  placeNameInput.value = '';
-  placeLinkInput.value = '';
+  clearValidationError(placeForm);
+  placeForm.reset();
   openPopup(placePopup);
 }
 
 function handlePlaceSubmit (evt) {
   evt.preventDefault();
-  renderCard(placeNameInput.value, placeLinkInput.value, elements);
+  renderCard({name: placeNameInput.value, link: placeLinkInput.value}, elements);
   closePopup(placePopup);
 }
 
 //image popup
 function openImagePopup(image) {
-  image.addEventListener('click', function() {
+  image.addEventListener('click', () => {
     imageOpened.src = image.src;
     imageOpened.alt = image.alt;
     imageOpenedName.textContent = image.alt;
@@ -110,9 +135,7 @@ function openImagePopup(image) {
   });
 }
 
-// Я пока не ссовсем знаю, как правильно работать с объектами,
-// но в следующем спринте после изучения этой темы обязательно поправлю!
-initialCards.forEach(item => {renderCard(item.name, item.link, elements)});
+initialCards.forEach(item => {renderCard(item, elements)});
 
 //profile popup
 editButton.addEventListener('click', openProfilePopup);
@@ -126,5 +149,3 @@ placeForm.addEventListener('submit', handlePlaceSubmit);
 
 //image popup
 imageCloseButton.addEventListener('click', () => closePopup(imagePopup));
-
-//Спасибо за комментарии! Я рада, что работа понравилась :)
