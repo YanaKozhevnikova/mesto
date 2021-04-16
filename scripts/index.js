@@ -90,18 +90,20 @@ function closePopupOverlay(popup) {
 }
 
  //Очищение полей с ошибками
-function clearValidationError(popupForm) {
-  const inputList = Array.from(popupForm.querySelectorAll('.form__input'));
+function clearValidationError(popupForm, validationObject) {
+  const inputList = Array.from(popupForm.querySelectorAll(validationObject.inputSelector));
+  const buttonElement = popupForm.querySelector(validationObject.submitButtonSelector);
   inputList.forEach(inputElement => {
     hideInputError(popupForm, inputElement, validationObject);
   });
+  toggleButtonState(inputList, buttonElement, validationObject)
 }
 
 //profile popup
 function openProfilePopup() {
-  clearValidationError(profileForm);
   nameInput.value = username.textContent;
   aboutInput.value = about.textContent;
+  clearValidationError(profileForm, validationObject);
   openPopup(profilePopup);
 }
 
@@ -114,8 +116,8 @@ function handleProfileSubmit (evt) {
 
 //place popup
 function openPlacePopup() {
-  clearValidationError(placeForm);
   placeForm.reset();
+  clearValidationError(placeForm, validationObject);
   openPopup(placePopup);
 }
 
