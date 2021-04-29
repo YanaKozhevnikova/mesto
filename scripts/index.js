@@ -16,6 +16,7 @@ const popups = document.querySelectorAll('.popup');
 //profile
 const profilePopup = document.querySelector('.popup_type_profile');
 const profileForm = profilePopup.querySelector('.form');
+const profileFormSelector = '.form[name="profile"]';
 const nameInput = profileForm.querySelector('.form__input_type_name');
 const aboutInput = profileForm.querySelector('.form__input_type_about');
 const username = document.querySelector('.profile__name');
@@ -26,9 +27,12 @@ const editButton = document.querySelector('.profile__button_type_edit');
 //place
 const placePopup = document.querySelector('.popup_type_place');
 const placeForm = placePopup.querySelector('.form');
+const placeFormSelector = '.form[name="place"]';
 const placeNameInput = placeForm.querySelector('.form__input_type_place-name');
 const placeLinkInput = placeForm.querySelector('.form__input_type_place-link');
 const addButton = document.querySelector('.profile__button_type_add');
+
+const cardTemplateId = '#card';
 
 //Открытие и закрытие попапов
 export default function openPopup(popup) {
@@ -65,10 +69,10 @@ function renderCard(item, templateSelector, wrap) {
   wrap.prepend(cardElement);
 }
 
-initialCards.forEach((item) => renderCard(item, '#card', elements));
+initialCards.forEach((item) => renderCard(item, cardTemplateId, elements));
 
 //profile popup
-const formProfile = new FormValidate(validationConfig, '.form[name="profile"]');
+const formProfile = new FormValidate(validationConfig, profileFormSelector);
 formProfile.enableValidation();
 
 function openProfilePopup() {
@@ -86,7 +90,7 @@ function handleProfileSubmit (evt) {
 }
 
 //place popup
-const formPlace = new FormValidate(validationConfig, 'form[name="place"]');
+const formPlace = new FormValidate(validationConfig, placeFormSelector);
 formPlace.enableValidation();
 
 function openPlacePopup() {
@@ -97,7 +101,7 @@ function openPlacePopup() {
 
 function handlePlaceSubmit (evt) {
   evt.preventDefault();
-  renderCard({name: placeNameInput.value, link: placeLinkInput.value}, '#card', elements);
+  renderCard({name: placeNameInput.value, link: placeLinkInput.value}, cardTemplateId, elements);
   closePopup(placePopup);
 }
 
