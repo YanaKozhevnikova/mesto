@@ -8,12 +8,14 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import { validationConfig, userInfoSelectors, popupSelectors, formsConfig, buttons, cardTemplateId, elementsSelector } from '../utils/constants.js';
 
+// image popup
+const ImagePopup = new PopupWithImage(popupSelectors.image);
+ImagePopup.setEventListeners();
+
 //создание карточки
 function сreateCard({name, link}) {
   const card = new Card({name, link}, cardTemplateId, () => {
-    const ImagePopup = new PopupWithImage(popupSelectors.image);
     ImagePopup.open({name, link});
-    ImagePopup.setEventListeners();
   })
   const cardElement = card.generateCard();
   cardsList.addItem(cardElement);
