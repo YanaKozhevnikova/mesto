@@ -4,14 +4,21 @@ export default class Api {
     this._token = token;
   }
 
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    } else {
+       return Promise.reject(`Ошибка: ${res.status} ${res.statusText}`);
+    }
+  }
+
   getInitialCards() {
     return fetch(`${this._baseUrl}cards`, {
       headers: {
         authorization: this._token
       }
     })
-    .then(res => (res.ok) ? res.json() : Promise.reject(`Ошибка: ${res.status} ${res.statusText}`))
-    .catch(err => console.log(err))
+    .then(this._checkResponse)
   }
 
   getUserInfo() {
@@ -20,8 +27,7 @@ export default class Api {
         authorization: this._token
       }
     })
-    .then(res => (res.ok) ? res.json() : Promise.reject(`Ошибка: ${res.status} ${res.statusText}`))
-    .catch(err => console.log(err))
+    .then(this._checkResponse)
   }
 
   setUserInfo(info) {
@@ -33,8 +39,7 @@ export default class Api {
       },
       body: JSON.stringify(info)
       })
-    .then(res => (res.ok) ? res.json() : Promise.reject(`Ошибка: ${res.status} ${res.statusText}`))
-    .catch(err => console.log(err))
+    .then(this._checkResponse)
   }
 
   postCard({name, link}) {
@@ -46,8 +51,7 @@ export default class Api {
       },
       body: JSON.stringify({name: name, link: link})
     })
-    .then(res => (res.ok) ? res.json() : Promise.reject(`Ошибка: ${res.status} ${res.statusText}`))
-    .catch(err => console.log(err))
+    .then(this._checkResponse)
   }
 
   deleteCard(card) {
@@ -58,8 +62,7 @@ export default class Api {
         authorization: this._token,
       },
     })
-    .then(res => (res.ok) ? res.json() : Promise.reject(`Ошибка: ${res.status} ${res.statusText}`))
-    .catch(err => console.log(err))
+    .then(this._checkResponse)
   }
 
   putLike(card) {
@@ -70,8 +73,7 @@ export default class Api {
         authorization: this._token,
       },
     })
-    .then(res => (res.ok) ? res.json() : Promise.reject(`Ошибка: ${res.status} ${res.statusText}`))
-    .catch(err => console.log(err))
+    .then(this._checkResponse)
   }
 
   removeLike(card) {
@@ -82,8 +84,7 @@ export default class Api {
         authorization: this._token,
       },
     })
-    .then(res => (res.ok) ? res.json() : Promise.reject(`Ошибка: ${res.status} ${res.statusText}`))
-    .catch(err => console.log(err))
+    .then(this._checkResponse)
   }
 
   changeAvatar(avatar) {
@@ -95,7 +96,6 @@ export default class Api {
       },
       body: JSON.stringify({avatar})
       })
-    .then(res => (res.ok) ? res.json() : Promise.reject(`Ошибка: ${res.status} ${res.statusText}`))
-    .catch(err => console.log(err))
+    .then(this._checkResponse)
   }
 }

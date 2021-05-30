@@ -11,12 +11,12 @@ export default class Card {
     this._handleCardClick = handleCardClick;
     this._handleDelete = handleDelete;
     this._handleLike = handleLike;
-    this.element = this._getTemplate();
-    this._image = this.element.querySelector('.element__image');
-    this._heading = this.element.querySelector('.element__heading');
-    this.likeButton = this.element.querySelector('.element__like-button');
-    this.likesNumber = this.element.querySelector('.element__like-count');
-    this._deleteButton = this.element.querySelector('.element__delete-button');
+    this._element = this._getTemplate();
+    this._image = this._element.querySelector('.element__image');
+    this._heading = this._element.querySelector('.element__heading');
+    this._likeButton = this._element.querySelector('.element__like-button');
+    this._likesNumber = this._element.querySelector('.element__like-count');
+    this._deleteButton = this._element.querySelector('.element__delete-button');
   }
 
   _getTemplate() {
@@ -30,11 +30,24 @@ export default class Card {
 
   _likeCard() {
     this._handleLike();
-    this.likeButton.classList.toggle('element__like-button_active');
+    this._likeButton.classList.toggle('element__like-button_active');
+  }
+
+  isLiked() {
+    return (this._likeButton.classList.contains('element__like-button_active')) ? true : false
+  }
+
+  updateLikes(res) {
+    this._likesNumber.textContent = res.likes.length;
+  }
+
+  deleteCard() {
+    this._element.remove();
+    this._element - null;
   }
 
   _setEventListeners() {
-    this.likeButton.addEventListener('click', () => {
+    this._likeButton.addEventListener('click', () => {
       this._likeCard();
     });
     this._deleteButton.addEventListener('click', () => {
@@ -49,17 +62,17 @@ export default class Card {
     this._image.src = this._link;
     this._image.alt = this._name;;
     this._heading.textContent = this._name;
-    this.likesNumber.textContent = this._likes.length;
+    this._likesNumber.textContent = this._likes.length;
 
     if (this._userId !== this._cardOwnerId) {
       this._deleteButton.remove();
     }
     if (this._likes.some(like => like._id === this._userId)) {
-      this.likeButton.classList.add('element__like-button_active');
+      this._likeButton.classList.add('element__like-button_active');
     }
 
     this._setEventListeners();
-    return this.element;
+    return this._element;
   }
 }
 
